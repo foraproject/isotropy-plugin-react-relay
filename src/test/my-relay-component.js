@@ -2,7 +2,8 @@ import React from 'react';
 import Relay from 'react-relay';
 import MyComponent from "./my-component";
 
-const relayComponent = Relay.createContainer(
+
+export default Relay.createContainer(
   MyComponent,
   {
     fragments: {
@@ -14,5 +15,3 @@ const relayComponent = Relay.createContainer(
     }
   }
 );
-
-export default relayComponent;

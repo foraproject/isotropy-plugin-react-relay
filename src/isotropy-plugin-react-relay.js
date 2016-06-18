@@ -17,7 +17,7 @@ type ReactComponentRouteType = {
   type: "react",
   url: string,
   method: string,
-  component: Function,
+  Component: Function,
   args: Object,
   options: HttpMethodRouteOptionsType,
   renderToStaticMarkup?: boolean,
@@ -30,8 +30,8 @@ type RelayRouteType = {
   type: "relay",
   url: string,
   method: string,
-  relayContainer: Function,
-  relayRoute: Object,
+  Container: Function,
+  RelayRoute: Function,
   graphqlUrl: string,
   args: Object,
   options: HttpMethodRouteOptionsType,
@@ -84,9 +84,9 @@ const getDefaults = function(val: getDefaultsParamsType) : ReactPluginConfigType
 const getAppRoute = function(route: Object) : AppRouteType {
   if (typeof route.handler !== "undefined" && route.handler !== null) {
     return Object.assign({}, route, { type: "handler" });
-  } else if (typeof route.component !== "undefined" && route.component !== null) {
+  } else if (typeof route.Component !== "undefined" && route.Component !== null) {
     return Object.assign({}, route, { type: "react" });
-  } else if (typeof route.relayContainer !== "undefined" && route.relayContainer !== null) {
+  } else if (typeof route.Container !== "undefined" && route.Container !== null) {
     return Object.assign({}, route, { type: "relay" });
   } else {
     throw new Error("Unknown type. Route type must be handler, react or relay.");
@@ -109,7 +109,7 @@ const getReactRoute = function(route: ReactComponentRouteType, appConfig: ReactP
     url: route.url,
     handler: async (req: ProcessedIncomingMessage, res: ServerResponse, args: Object) => {
       await reactAdapter.render({
-          component: route.component,
+          Component: route.Component,
           req,
           res,
           args,
@@ -131,8 +131,8 @@ const getRelayRoute = function(route: RelayRouteType, appConfig: ReactPluginConf
     url: route.url,
     handler: async (req: ProcessedIncomingMessage, res: ServerResponse, args: Object) => {
       await reactAdapter.renderRelayContainer({
-          relayContainer: route.relayContainer,
-          relayRoute: route.relayRoute,
+          Container: route.Container,
+          RelayRoute: route.RelayRoute,
           graphqlUrl: route.graphqlUrl,
           req,
           res,

@@ -68,20 +68,20 @@ describe("Isotropy React Plugin", () => {
 
   it(`Serves a react app`, async () => {
     const routes = [
-      { url: "/hello", method: "GET", component: MyComponent }
+      { url: "/hello", method: "GET", Component: MyComponent }
     ];
     const appConfig = { routes, path: "/", renderToStaticMarkup: false };
     const isotropyConfig = { dir: __dirname };
 
     await reactRelayModule.setup(appConfig, router, isotropyConfig);
     const data = await makeRequest("localhost", server.address().port, "/hello", "GET", { 'Content-Type': 'application/x-www-form-urlencoded' }, {});
-    data.result.should.startWith("<html data-reactid");
+    data.result.should.startWith("<html data-reactroot");
   });
 
 
   it(`Serves a react app with static markup`, async () => {
     const routes = [
-      { url: "/hello/:name", method: "GET", component: MyComponent }
+      { url: "/hello/:name", method: "GET", Component: MyComponent }
     ];
     const appConfig = { routes, path: "/", renderToStaticMarkup: true };
     const isotropyConfig = { dir: __dirname };
@@ -94,7 +94,7 @@ describe("Isotropy React Plugin", () => {
 
   it(`Serves a relay+react app with static markup`, async () => {
     const routes = [
-      { url: "/hellorelay/:id", method: "GET", relayContainer: MyRelayComponent, relayRoute: MyRelayRoute, graphqlUrl: "http://localhost:8081/graphql" }
+      { url: "/hellorelay/:id", method: "GET", Container: MyRelayComponent, RelayRoute: MyRelayRoute, graphqlUrl: "http://localhost:8081/graphql" }
     ];
     const appConfig = { routes, path: "/", renderToStaticMarkup: true };
     const isotropyConfig = { dir: __dirname };
